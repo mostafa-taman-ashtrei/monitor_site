@@ -1,6 +1,6 @@
 import requests 
 import logging
-
+from plyer import notification
 
 logging.basicConfig(
     filename='logs',
@@ -8,9 +8,18 @@ logging.basicConfig(
     format='%(asctime)s:%(levelname)s:%(message)s'
 )
 
+def notify(title, message):
+    notification.notify(
+        title = title,
+        message = message,
+        app_icon = 'icon.ico',
+        timeout = 10,
+    )
+
 def check_status():
     try:
-        url = 'https://github.com'
+        # insert your url here
+        url = 'https://github.com/neoScriptscode/someRandomRepo'
         req = requests.get(url)
         print(req.status_code)
 
@@ -18,6 +27,7 @@ def check_status():
             msg = f'{url} is down'
             logging.info(msg)
             print(msg)
+            notify('Oh no', msg)
         else: 
             msg = f'Everything is ok {url} is up...'
             logging.info(msg)
